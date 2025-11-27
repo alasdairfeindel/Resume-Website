@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Alasdair Feindel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Zalando+Sans:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <!-- Hexagon Grid Container -->
+  <div id="hex-grid-container"></div>
+
+  <header>
+    <!-- Hidden checkbox for menu state -->
+    <input type="checkbox" id="menu-toggle">
+    
+    <!-- Hamburger (NOT wrapped in label) -->
+    <div id="hamburger">
+      <label for="menu-toggle" aria-label="Menu" role="button" tabindex="0">
+        <hr class="hamline" />
+        <hr class="hamline" /> 
+        <hr class="hamline" />
+      </label>
+    </div>
+
+    <!-- Desktop nav -->
+    <nav id="desktopMenu">
+      <ul>
+        <li><a href="#home">HOME</a></li>
+        <li><a href="#skills">SKILLS</a></li>
+        <li><a href="#educationexperience">EDUCATION &amp; EXPERIENCE</a></li>
+      </ul>
+    </nav>
+
+    <!-- Mobile nav -->
+    <nav id="mobileMenu">
+      <ul>
+        <li><a href="#home">HOME</a></li>
+        <li><a href="#skills">SKILLS</a></li>
+        <li><a href="#educationexperience">EDUCATION &amp; EXPERIENCE</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Home section -->
+    <section id="home">
+      <div class="home-card">
+        <div class="home-info">
+          <h1>Alasdair Feindel</h1>
+          <div class="contact">
+            <div>alasdairfeindel@gmail.com</div>
+            <div>+1 902-410-3343</div>
+          </div>
+          <p class="home-subheading">I am currently at NSCC until 2028 learning to be a Data Analyst.<br>
+            My mission is to make data digestible to others and inform them on decisions they can make to improve people's lives.</p>
+
+          <!-- Buttons -->
+          <div class="buttons">
+            <a href="https://docs.google.com/document/d/1esGZfpmWipnK1ZpKTy8t2hcApXBi5RAEzncvtG10yiE/edit?usp=sharing" 
+              target="_blank" rel="noopener" class="button">Resume</a>   
+            <a href="https://docs.google.com/document/d/1xH5nnThKSehg1O1_GfYBbf3zt52kAgEvTD56ukjEKjQ/edit?usp=sharing" 
+              target="_blank" rel="noopener" class="button">Esports Resume</a>
+            <a href="https://www.linkedin.com/in/alasdair-feindel-716a93241" 
+              target="_blank" rel="noopener" class="button">LinkedIn</a>
+            <a href="https://github.com/alasdairfeindel" 
+              target="_blank" rel="noopener" class="button">GitHub</a> 
+          </div>
+        </div>
+
+        <div class="home-photo">
+          <img src="images/headshot.jpg" alt="Headshot of Alasdair Feindel" />
+        </div>
+      </div>
+    </section>
+
+    <!-- Skills section -->
+    <section id="skills">
+      <h2 class="section-heading">SKILLS</h2>
+      <h3>Coding Skills</h3>
+      <div class="skills-grid">
+        <div class="skill-box">
+          <img src="images/html5.png" alt="HTML5 Logo" class="skill-icon" />
+          <span>HTML5</span>
+        </div>
+        <div class="skill-box">
+          <img src="images/css3.png" alt="CSS3 Logo" class="skill-icon" />
+          <span>CSS3</span>
+        </div>
+        <div class="skill-box">
+          <img src="images/dukejava.png" alt="Java Logo" class="skill-icon" />
+          <span>Java</span>
+        </div>
+        <div class="skill-box">
+          <img src="images/linux.png" alt="Linux Logo" class="skill-icon" />
+          <span>Linux</span>
+        </div>
+        <div class="skill-box">
+          <img src="images/sql.png" alt="SQL Logo" class="skill-icon" />
+          <span>SQL</span>
+        </div>
+        <div class="skill-box">
+          <img src="images/windows.png" alt="Windows Logo" class="skill-icon" />
+          <span>Win10</span>
+          <span>Admin</span>
+        </div>
+        <div class="skill-box">
+          <img src="images/python.png" alt="Python Logo" class="skill-icon" />
+          <span>Python</span>
+        </div>
+        <div class="skill-box">
+          <img src="images/vmware.png" alt="VMWare Logo" class="skill-icon" />
+          <span>VMWare</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Education & Experience section -->
+    <section id="educationexperience">
+      <h2 class="section-heading">EDUCATION &amp; EXPERIENCE</h2>
+      <div class="edu-exp">
+        <div class="education section-expansion">
+          <h3>Education</h3>
+          <div class="text-expansion">
+            <h4>• IT Data Analytics, Certificate, NSCC, Active, (expected <br>&nbsp;&nbsp;2028 graduation)</h4>
+            <h5>- Expertise in coding languages, IT Professional Practice, Statistics,
+              <br>&nbsp;&nbsp;Data and Business Analysis.</h5>          
+            <h4>• Saint Mary's University, Bachelors of Computer Science <br>&nbsp;&nbsp;2021 – 2023</h4>
+            <h5>- Experience in Java, Management Science, and Macro Economics.</h5>
+            <h4>• High School Diploma, BFEC, 2021</h4>
+            <h5>- Math Prize (100% in Math 12), Principal's Award of Excellence</h5>
+          </div>
+        </div>
+
+        <div class="experience section-expansion">
+          <h3>Experience</h3>
+          <div class="text-expansion">
+            <h4> • Ubisoft Game Playtester twice during 2025</h4>
+            <h5>- Participated in playtesting games for Ubisoft in person with other 
+              <br>&nbsp;&nbsp;people at their studio (whilst under NDA) and at home, both for
+              <br>&nbsp;&nbsp;monetary compensation.
+            <h4>• Overwatch 2 Esports Coach, 2021 - Present</h4>
+            <h4>• Overwatch 2 Esports Team Manager, 2017 - 2021: </h4>
+            <h5>- Coached and managed in the game's official circuit and lower level 
+              <br>&nbsp;&nbsp;leagues, while also having teams appearing on the main broadcast.</h5>
+            <h5>- Organized practice blocks for my teams and set goals for 
+              <br>&nbsp;&nbsp;improvement.</h5>            
+            </h5>
+          </div>
+        </div>
+      </div>
+    </section> 
+  <!-- Cat Gallery Section -->
+  <section id="cats">
+    <h2 class="section-heading">Tom, Moppet & Mittens</h2>
+    
+    <div class="cat-gallery">
+      <a href="#modal-tom" class="cat-thumbnail">
+        <img src="images/Tom.jpeg" alt="Tom the cat" />
+      </a>
+      <a href="#modal-moppet" class="cat-thumbnail">
+        <img src="images/Moppet.jpeg" alt="Moppet the cat" />
+      </a>
+      <a href="#modal-mittens" class="cat-thumbnail">
+        <img src="images/Mittens.jpeg" alt="Mittens the cat" />
+      </a>
+    </div>
+  </section>
+
+  <!-- Modal Overlays -->
+  <div id="modal-tom" class="modal-overlay">
+    <a href="#close" class="modal-backdrop"></a>
+    <div class="modal-content">
+      <a href="#close" class="modal-close">×</a>
+      <img src="images/Tom.jpeg" alt="Tom the cat - full size" />
+    </div>
+  </div>
+
+  <div id="modal-moppet" class="modal-overlay">
+    <a href="#close" class="modal-backdrop"></a>
+    <div class="modal-content">
+      <a href="#close" class="modal-close">×</a>
+      <img src="images/Moppet.jpeg" alt="Moppet the cat - full size" />
+    </div>
+  </div>
+
+  <div id="modal-mittens" class="modal-overlay">
+    <a href="#close" class="modal-backdrop"></a>
+    <div class="modal-content">
+      <a href="#close" class="modal-close">×</a>
+      <img src="images/Mittens.jpeg" alt="Mittens the cat - full size" />
+    </div>
+  </div>
+  </main>
+<footer>
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&copy; 2025 Alasdair Feindel. All rights reserved.</p>
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;Hexagon Grid Script based on: https://codepen.io/bearies/pen/VxxpEr | 
+  HTML5 logo (W3C) — CC BY 3.0 | 
+  CSS3 logo — daPhyre / Elfi / ExE Boss; CC BY 3.0 (modified: white→transparent) | 
+  Tux &nbsp;&nbsp;&nbsp;&nbsp;created by Larry Ewing using GIMP | 
+  Linux® is the registered trademark of Linus Torvalds in the U.S.</p>
+</footer>
+  <!-- Hexagon Grid Script-->
+  <script src="hexagongrid.js"></script>
+</body>
+</html>

@@ -1,0 +1,728 @@
+/* =======================
+   SMOOTH SCROLLING
+======================= */
+html {
+  scroll-behavior: smooth;       /* Enables smooth scrolling using nav menu */
+}
+
+/* =======================
+   :ROOT VARIABLES
+   Define reusable color variables for the site
+======================= */
+:root {
+  --primary: #403a69;           /* Main purple for large backgrounds and brand accents */
+  --secondary: #ffffff;         /* White for text, borders, and highlights */
+  --tertiary: #6b63c4;          /* Purple for buttons and accent elements */
+  --section-purple: #53467eef;  /* Purple for section/card backgrounds */
+  --hover: #543bac;             /* Purple for button hover */
+  --nav-menu: #463d64;          /* Blue/purple for nav menu */
+}
+
+/* =======================
+   GLOBAL BOX-SIZING
+   Makes sizing predictable across all elements
+======================= */
+*, *::before, *::after { 
+  box-sizing: border-box;       /* Subtracts the padding and border size from the width to add it inside (allows content to stay the same size*/
+}
+
+/* =======================
+   PAGE BASE STYLES
+======================= */
+body {
+  margin: 0;                    /* Removes default browser margin */
+  color: var(--secondary);      /* Sets default text color to white */
+  font-family: 'Zalando Sans', Arial, Helvetica, sans-serif; /* Added from Google Fonts */
+  background: linear-gradient(var(--primary), var(--primary)); /* Sets colour and background image */
+  background-size: cover;       /* Make image fill screen */
+  background-repeat: no-repeat; /* Makes it not repeat */
+  background-position: center;  /* Centers image */
+}
+
+/* =======================
+   SVG HEXAGON ANIMATION
+======================= */
+#hex-grid-container {
+  position: fixed;              /* Fixes animation to same spot when scrolling */
+  top: 0;                       /* Places at top */
+  left: 0;                      /* Places at left */
+  width: 100vw;                 /* Sets full viewport width */
+  height: 100vh;                /* Sets full viewport height */
+  z-index: 1;                   /* Positions behind nav but above body */
+  pointer-events: none;         /* Clicks pass through to whatever is behind it */
+  overflow: hidden;             /* Hides any overflow */
+}
+
+#hex-grid-container svg {
+  position: absolute;           /* Ignores other elements and positions according to #hex-grid-container (nearest positioned parent) to fill the fixed container */
+  top: 0;                       /* Places at top */
+  left: 0;                      /* Places at left */
+  width: 100vw;                 /* Sets full viewport width */
+  height: 100vh;                /* Sets full viewport height */
+  opacity: 0.2;                 /* Sets semi-transparent */
+}
+
+/* Hexagon animation styles */
+.hexitem {
+  fill-opacity: 0.3;            /* Sets semi-transparent fill */
+  transition: fill 0.6s ease;   /* Adds smooth transition for fill color */
+  animation: pulse-purple 4s infinite ease-in-out; /* Applies pulsing animation */
+}
+
+/* Create staggered animations for hexagons */
+@keyframes pulse-purple {
+  0%, 100% { 
+    fill: #481dc9;              /* Sets starting/ending color */
+    fill-opacity: 0.2;          /* Sets starting/ending opacity */
+  }
+  50% { 
+    fill: #7244e4;              /* Sets middle color */
+    fill-opacity: 0.6;          /* Sets middle opacity */
+  }
+}
+
+/* Apply animations with staggered delays */
+.hexitem:nth-child(2n) { animation-delay: 0.2s; }  /* Delays every 2nd hexagon */
+.hexitem:nth-child(3n) { animation-delay: 0.4s; }  /* Delays every 3rd hexagon */
+.hexitem:nth-child(4n) { animation-delay: 0.6s; }  /* Delays every 4th hexagon */
+.hexitem:nth-child(5n) { animation-delay: 0.8s; }  /* Delays every 5th hexagon */
+.hexitem:nth-child(6n) { animation-delay: 1s; }    /* Delays every 6th hexagon */
+.hexitem:nth-child(7n) { animation-delay: 1.2s; }  /* Delays every 7th hexagon */
+
+/* =======================
+   HEADER & NAV
+   Header spacing and full-width nav container
+======================= */
+header { 
+  margin-bottom: 2.5rem;        /* Adds space below header */
+  padding-top: 0.5rem;          /* Adds small top padding */
+  position: relative;           /* Creates positioning context and enables z-index; maintains space when repositioned */
+  z-index: 1000;                /* Ensures header stays above everything */
+}
+
+nav { 
+  width: 100%;                  /* Sets nav to full width */
+  z-index: 1000;                /* Positions nav above everything */
+}
+
+/* =======================
+   HAMBURGER (MOBILE)
+   Container and line styles for the hamburger icon
+======================= */
+#hamburger {
+  display: none;                /* Hidden by default (desktop) */
+}
+
+#hamburger .hamline {
+  width: 24px;                  /* Sets length of each horizontal bar */
+  height: 2px;                  /* Sets thickness of each bar */
+  background: var(--secondary); /* Sets bar color to white */
+  border-radius: 2px;           /* Adds small radius to bar ends */
+}
+
+/* =======================
+   DESKTOP NAV (pill style)
+======================= */
+#desktopMenu > ul {
+  list-style: none;             /* Removes default bullets */
+  display: flex;                /* Arranges nav items horizontally */
+  gap: 1rem;                    /* Adds space between nav items */
+  padding: 12px 25px;           /* Adds interior padding */
+  margin: 0;                    /* Resets default margin */
+  width: fit-content;           /* Nav menu is only as wide as the nav items inside */
+  position: fixed;              /* Fixes nav to same spot when scrolling */
+  top: 12px;                    /* Places slightly below the very top */
+  left: 50%;                    /* Moves element's left edge to center of page */
+  transform: translateX(-50%);  /* Shifts it back left by 50% of own width to fully center it */
+  z-index: 1000;                /* Positions nav above everything */
+  background: var(--nav-menu);  /* Sets pill background color */
+  border-radius: 50px;          /* Creates rounded pill-shaped container */
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1); /* Adds lift effect */
+}
+
+#desktopMenu li a {
+  color: white;                 /* Sets text to white */
+  text-decoration: none;        /* Removes underline */
+  font-weight: 700;             /* Sets bold nav labels */
+  padding: 10px 16px;           /* Increases clickable area */
+  border-radius: 50px;          /* Rounds each link */
+  text-transform: uppercase;    /* Transforms text to uppercase */
+  transition: background-color 0.3s, transform 0.2s; /* Adds smooth transitions */
+}
+
+#desktopMenu li a:hover {
+  background: var(--hover);          /* Changes background color on hover */
+  transform: scale(1.05);       /* Scales hovered link slightly */
+}
+
+#desktopMenu li a[href="#educationexperience"] { 
+  white-space: nowrap;          /* Prevents this link from wrapping */
+}
+
+/* =======================
+   MOBILE MENU (hidden on desktop)
+======================= */
+#mobileMenu { 
+  display: none;                /* Hide mobile menu by default */
+}
+
+#mobileMenu.show {
+  display: block !important;    /* Shows mobile menu when show class is added, !important forces it */
+}
+/* =======================
+   HAMBURGER MENU TOGGLE
+======================= */
+/* Hide the checkbox */
+#menu-toggle {
+  display: none;
+}
+
+/* When checkbox is checked, show the mobile menu */
+#menu-toggle:checked ~ #mobileMenu {
+  display: block !important;
+}
+
+/* =======================
+   MAIN AREA
+   Base styling for <main> content
+======================= */
+main {
+  color: var(--secondary);      /* Sets main content text to secondary (white) color */
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.15); /* Adds subtle shadow to text */
+  font-weight: 500;             /* Sets medium weight for body/main text */
+  padding-bottom: 0px;          /* Adds breathing room below the main content */
+  position: relative;           /* Creates positioning context and enables z-index; maintains space when repositioned */
+  z-index: 10;                  /* Positions main content above background animations */
+}
+
+/* =======================
+   SECTION BASE
+   General rules applied to section elements
+======================= */
+section {                            
+  padding: 2rem 1.25rem;        /* Adds inner spacing */
+}
+
+/* =======================
+   HEADING DEFAULTS
+   Spacing, weight, and small heading tweaks
+======================= */
+h1, h2, h3, h4, h5 { 
+  margin: 0 0 0.5rem 0;         /* Sets bottom margin for all headings */
+}
+
+h2, h3, h4, h5 { 
+  font-weight: 700;             /* Sets bold font weight */
+}
+
+h3 {
+  font-size: 1.85em;            /* Sets font size to 1.85 times parent */
+  margin-top: 30px;             /* Default top margin */
+  margin-bottom: 15px;          /* Adds space below heading */
+  padding: 10px 15px;           /* Adds interior padding */
+  background: rgba(144, 58, 210, 0.1); /* Adds light purple background */
+  border-left: 4px solid var(--tertiary); /* Adds left accent border */
+}
+
+/* Override margin for h3 inside specific sections */
+#skills h3, #educationexperience h3, #contact h3 { 
+  margin-top: 5px;              /* Less space for section h3s */
+}
+
+h4 { 
+  font-size: 1.45em;            /* Sets larger font size */
+  padding-left: 0;              /* Removes left padding */
+}
+
+h5 { 
+  font-size: 1.25em;            /* Sets medium font size */
+  padding-left: 20px;           /* Adds left padding for indentation */
+  text-align: left;             /* Aligns text to left */
+}
+
+/* Section heading overrides everything */
+.section-heading {
+  font-size: 1.125rem;          /* Sets slightly larger than body text */
+  font-weight: 700;             /* Sets bold font weight */
+  text-align: left;             /* Aligns text to left */
+  margin-top: 0;                /* Removes top margin */
+  margin-bottom: 0.5rem;        /* Adds small bottom margin */
+  padding: 0;                   /* Removes default padding */
+  padding-bottom: 0.25rem;      /* Adds small bottom padding */
+  background: none;             /* Removes background color */
+  border-left: none;            /* Removes left border */
+  border-bottom: 3px solid var(--secondary); /* Adds bottom border for emphasis */
+  text-shadow: 3px 3px 0px rgba(0,0,0,0.8), 5px 5px 10px rgba(0,0,0,0.5); /* Adds dramatic shadow effect */
+  color: var(--secondary);      /* Sets text to white */
+}
+
+/* =======================
+   BUTTONS
+   Consistent button appearance + hover feedback
+======================= */
+button,
+.button {
+  display: inline-block;        /* Enables buttons to flow horizontally while respecting padding and height */
+  background: var(--tertiary);  /* Sets button background to tertiary colour */
+  color: #ffffff;               /* Sets button text to white */
+  font-size: 24px;              /* Font size for button */
+  font-weight: 650;             /* Font boldness */
+  font-family: 'Zalando Sans', Arial, Helvetica, sans-serif; /* Font family */
+  border: none;                 /* Removes default browser border */
+  border-radius: 5px;           /* Adds slightly rounded corners */
+  cursor: pointer;              /* Changes cursor to pointer */
+  padding: 16px 32px;           /* Adds inner spacing to buttons */
+  min-height: 48px;             /* Ensures minimum touch target height */
+  text-decoration: none;        /* Only affects links, ignored by buttons */
+  transition: background 0.3s, transform 0.12s; /* Adds smooth transition for hover effects */
+}
+
+button:hover,
+.button:hover { 
+  background: var(--hover);          /* Changes background color on hover */
+  transform: translateY(-2px);  /* Shifts button upward on hover */
+}
+
+/* =======================
+   LINKED IMAGES
+   Ensure images inside links are responsive
+   ****FOR WHEN I ADD LINKS TO THE SKILL ICONS****
+======================= */
+a img {
+  height: auto;                 /* Maintains aspect ratio of the image */
+  max-width: 100%;              /* Prevents image overflow from container */
+  display: inline-block;        /* Enables linked images to flow horizontally while respecting padding and height */
+}
+
+/* =======================
+   HOME SECTION
+   Container reset and hero/card layout
+======================= */
+#home { 
+  padding: 0;                   /* Removes default padding */
+  background: transparent;      /* Sets transparent background */
+  margin-top: 3.75rem;          /* Adds top spacing */
+}
+
+#home img { 
+  width: 100%;                  /* Sets images to fill container */
+  display: block;               /* Sets block-level display; each img takes up a column */
+  margin: 0 auto;               /* Centers image horizontally */
+  border-radius: 0;             /* Removes border radius */
+}
+
+/* Home card container (two-column layout) */
+.home-card {
+  display: flex;                /* Makes left and right columns sit side by side (row layout) */
+  align-items: stretch;         /* Stretches children to equal height */
+  gap: 0;                       /* No space between columns */
+  padding: 0px;                 /* No interior padding */
+  width: 100%;                  /* Sets full parent width */
+  min-height: 100vh;            /* Above the fold hero setting, makes sure it fills the screen */
+  width: 77.5%;                 /* Caps width at value */
+  margin: 1.25rem auto;         /* Vertical spacing + horizontal centering by distributing leftover space evenly */
+  border-radius: 12px;          /* Rounds outer corners of the card */
+  overflow: hidden;             /* Hides content that overflows the card */
+  box-shadow: 0 20px 60px rgba(0,0,0,0.4); /* Adds prominent shadow */
+}
+
+/* Left / content column of the home card */
+.home-info {
+  background-color: var(--section-purple); /* Sets purple background */
+  flex: 1.25;                   /* Ratio of available space taken */
+  padding: 2.25rem 2rem;        /* Adds vertical and horizontal padding */
+  color: var(--secondary);      /* Sets text to white */
+  display: flex;                /* Stacks children vertically (column flex) */
+  flex-direction: column;       /* Ensures vertical stacking (how it flows)*/
+  justify-content: center;      /* Centers stacked items vertically (vertical from flex-direction being column)*/
+  gap: 0;                       /* No extra spacing between stacked items */
+  text-align: center;           /* Centers text inside the column */
+}
+
+/* Main heading inside home-info */
+.home-info h1 {
+  margin: 0;                    /* Removes all margins */
+  font-size: 2.75rem;           /* Sets large font size */
+  letter-spacing: 2px;          /* Increases letter spacing */
+  text-transform: uppercase;    /* Transforms text to uppercase */
+  line-height: 1.05;            /* Sets tight line-height */
+  font-weight: 800;             /* Sets bold font weight */
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.3), 0 0 20px rgba(77,166,255,0.3); /* Adds subtle shadow with slight glow */
+  color: #ffffff;               /* Sets clean white color */
+}
+
+/* Contact block inside home-info (email/phone) */
+.home-info .contact {
+  margin-top: 0.25rem;          /* Adds minimal top spacing */
+  margin-bottom: 1rem;          /* Adds space below contact */
+  font-size: 1.2rem;            /* Adjust this value for size */
+  font-weight: 600;             /* Adjust this for boldness (100-900) */
+  line-height: 1.2;             /* Change from 1.5 to 1.2 for tighter spacing */
+  letter-spacing: 0.5px;        /* Adjust spacing between letters */
+}
+
+.home-info .contact div {
+  margin-bottom: 0;             /* Removes space between email and phone */
+}
+
+/* Consistent styling regardless of HTML tag used */
+.home-subheading {
+  text-align: center;           /* Centers text horizontally */
+  font-size: larger;            /* Sets larger font size */
+  margin: 0 0 0.5rem 0;         /* Adds bottom margin */
+  font-weight: 700;             /* Sets bold font weight */
+  color: var(--secondary);      /* Sets text to white */
+}
+
+/* Buttons container inside home-info */
+.home-info .buttons {
+  display: flex;                /* Lays out buttons in a row */
+  gap: 20px;                    /* Adds horizontal space between buttons */
+  flex-wrap: wrap;              /* Wraps buttons onto new lines if needed */
+  justify-content: center;      /* Centers buttons horizontally in the row */
+}
+
+/* Right / photo column of the home card */
+.home-photo {
+  flex: 1;                      /* Sets photo column to one part */
+  min-width: 220px;             /* Prevents column from shrinking below 220px */
+  display: block;               /* Sets block element */
+  overflow: hidden;             /* Hides overflow */
+  border-radius: 0 12px 12px 0; /* Rounds only the right-side corners */
+}
+
+.home-photo img {
+  width: 100%;                  /* Sets image to fill container width */
+  height: 100%;                 /* Sets image to fill container height */
+  display: block;               /* Removes inline-gap below images */
+  object-fit: cover;            /* Crops image to fill container */
+  object-position: center;      /* Keeps it centered */
+}
+
+/* =======================
+   CARD SECTIONS: SKILLS / EDUCATION / CONTACT
+======================= */
+#skills, #educationexperience, #contact {
+  background-color: var(--section-purple); /* Sets purple background */
+  color: white;                 /* Sets text to white */
+  padding: 20px;                /* Adds inner spacing */
+  margin: 20px;                 /* Adds space outside cards */
+  border-radius: 10px;          /* Adds rounded corners */
+}
+
+/* =======================
+   SKILLS SECTION
+======================= */
+/* Skills Grid Container */
+.skills-grid {
+  display: grid;                /* Creates grid layout (2D) */
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); /* Creates as many columns that can fit, each at least 120px, grows to fill space equally */
+  gap: 20px;                    /* Adds space between grid items */
+  margin: 20px 0;               /* Adds vertical spacing */
+}
+
+/* Individual Skill Box */
+.skill-box {
+  background: rgba(255, 255, 255, 0.1); /* Adds semi-transparent white background */
+  border-radius: 10px;          /* Rounds corners */
+  padding: 30px 20px;           /* Adds interior spacing */
+  display: flex;                /* Stacks children vertically */
+  flex-direction: column;       /* Ensures vertical stacking in box */
+  align-items: center;          /* Centers items horizontally in box */
+  justify-content: space-between; /* Space between icon and text */
+  gap: 15px;                    /* Adds space between icon and text */
+  transition: transform 0.3s, background 0.3s; /* Adds transitions that will take 0.3s */
+  min-height: 280px;            /* Set consistent minimum height for all boxes */
+}
+
+.skill-box:hover {
+  transform: translateY(-5px);  /* Shifts box upward on hover */
+  background: rgba(255, 255, 255, 0.15); /* Brightens background on hover */
+}
+
+.skill-box .skill-icon {
+  width: 150px;                 /* Fixed width */
+  height: 150px;                /* Fixed height - same as width for square */
+  object-fit: contain;          /* Fits whole image inside space */
+  flex-shrink: 0;               /* Prevent icon from shrinking */
+}
+
+.skill-box span {
+  font-size: clamp(1rem, 2.35vw, 1.85rem); /* Scales text between 1rem and 2.35rem based on viewport (min, preferred, max) */
+  font-weight: 775;             /* Sets bold font weight */
+  color: var(--secondary);      /* Sets text to white */
+  text-align: center;           /* Centers text */
+  white-space: nowrap;          /* Prevents text from wrapping */
+  width: 100%;                  /* Makes span take full width of container */
+  flex-shrink: 0;               /* Prevent text from shrinking */
+  overflow: hidden;             /* Prevents overflow */
+
+}
+
+/* =======================
+   EDUCATION & EXPERIENCE LAYOUT
+======================= */
+.edu-exp {
+  display: flex;                /* Places education and experience columns in a row */
+  gap: 2rem;                    /* Adds space between the columns */
+  flex-wrap: wrap;              /* Columns wrap to next line on small screens */
+}
+
+.education, .experience {
+  flex: 1;                      /* Ratio of available space taken */
+  min-width: 300px;             /* Prevents columns from shrinking below 300px */
+}
+
+/* =======================
+   EXPANDABLE CONTENT
+======================= */
+.section-expansion h3 {
+  cursor: pointer;              /* Changes cursor to pointer */
+  position: relative;           /* Creates positioning context and enables z-index; maintains space when repositioned */
+  display: flex;                /* Sets to flex container */
+  justify-content: space-between; /* Sets the horizontal spacing of items */
+  align-items: center;          /* Centers vertically */
+}
+
+.section-expansion h3::after {
+  content: '▼';                 /* The arrow */
+  font-size: 0.7em;             /* Arrow size is 70% of font */
+  transition: transform 0.3s ease; /* Transition time and animation */
+  display: inline-block;        /* Enables rotation */
+  flex-shrink: 0;               /* Arrow stays the same size even if h3 text wraps */
+}
+
+.section-expansion:hover h3::after {
+  transform: rotate(180deg);    /* Flips arrow on hover */
+}
+
+.text-expansion {            /* When hover is not active on section */
+  max-height: 0;                /* Hides content by collapsing it */
+  overflow: hidden;             /* Hides any overflow */
+  opacity: 0;                   /* Hides content by making it transparent */
+  transition: max-height 0.5s ease, opacity 0.4s ease, margin-top 0.5s ease; /* Animates height, opacity, and margin when expanding/collapsing on hover */
+  margin-top: 0;                /* No spacing when collapsed */
+}
+
+.section-expansion:hover .text-expansion {
+  max-height: 2000px;           /* Sets max height large enough to show all content */
+  opacity: 1;                   /* Makes everything appear at full opacity */
+  margin-top: 15px;             /* Sets margin to have spacing once hovering */
+}
+
+/* =======================
+   CAT GALLERY SECTION
+======================= */
+#cats {
+  padding-bottom: 0.5rem;       /* Reduces bottom padding for tighter spacing */
+}
+
+.cat-gallery {
+  display: flex;                /* Lays out cat thumbnails in a row */
+  justify-content: space-between; /* Distributes thumbnails evenly */
+  padding: 1rem 0;              /* Adds vertical padding */
+  gap: 1rem;                    /* Adds space between thumbnails */
+}
+
+.cat-thumbnail img {
+  width: 120px;                 /* Sets thumbnail width */
+  height: 160px;                /* Sets thumbnail height */
+  object-fit: cover;            /* Fills whole container, crops if needed */
+  border-radius: 8px;           /* Rounds thumbnail corners */
+  cursor: pointer;              /* Changes cursor to pointer */
+  transition: transform 0.3s ease; /* Adds smooth transition for hover effect */
+}
+
+.cat-thumbnail img:hover {
+  transform: scale(1.1);        /* Scales thumbnail up on hover */
+}
+
+/* Modal Overlay (entirety of pop up content when thumbnail is clicked) */
+.modal-overlay {
+  position: fixed;              /* Keeps the modal in place when scrolling */
+  top: 0;                       /* Places at top */
+  left: 0;                      /* Places at left */
+  width: 100vw;                 /* Sets full viewport width */
+  height: 100vh;                /* Sets full viewport height */
+  background-color: rgba(0, 0, 0, 0.8); /* Adds dark semi-transparent background */
+  display: none;                /* Hidden by default */
+  z-index: 1000;                /* Positions above everything */
+  justify-content: center;      /* Centers modal content horizontally */
+  align-items: center;          /* Centers modal content vertically */
+}
+
+.modal-overlay:target {
+  display: flex;                /* Links to HTML for specific modal */
+}
+
+/* Modal Content */
+.modal-backdrop {
+  position: absolute;           /* Ignores other elements and positions according to .modal-overlay (nearest positioned parent) to fill the entire modal area */
+  top: 0;                       /* Places at top */
+  left: 0;                      /* Places at left */
+  width: 100%;                  /* Sets full width */
+  height: 100%;                 /* Sets full height */
+  cursor: pointer;              /* Changes cursor to pointer */
+}
+
+.modal-content {
+  position: relative;           /* Creates positioning context and enables z-index; maintains space when repositioned */
+  max-width: 90%;               /* Caps width at 90% of viewport */
+  max-height: 90vh;             /* Caps height at 90% of viewport height */
+  z-index: 1;                   /* Positions content above backdrop */
+}
+
+.modal-content img {
+  width: auto;                  /* Maintains aspect ratio */
+  height: auto;                 /* Maintains aspect ratio */
+  max-width: 100%;              /* Prevents image overflow from container */
+  max-height: 90vh;             /* Caps height at 90% of viewport height */
+  object-fit: contain;          /* Fits whole image inside space */
+  border-radius: 8px;           /* Rounds image corners */
+}
+
+/* Close Button */
+.modal-close {
+  position: absolute;           /* Ignores other elements and positions according to .modal-content (nearest positioned parent) to float in top-right corner */
+  top: 15px;                    /* Places near top */
+  right: 15px;                  /* Places near right edge */
+  font-size: 45px;              /* Sets large font size for visibility */
+  color: white;                 /* Sets text to white */
+  text-decoration: none;        /* Removes underline */
+  cursor: pointer;              /* Changes cursor to pointer */
+  font-weight: bold;            /* Sets bold font weight */
+  line-height: 1;               /* Sets tight line height */
+}
+
+.modal-close:hover {
+  color: #ccc;                  /* Changes color to light gray on hover */
+}
+
+/* =======================
+   MEDIA QUERIES
+======================= */
+
+/* Mobile Navigation - 599px and below */
+@media (max-width: 599px) {
+  #desktopMenu { 
+    display: none !important;   /* Hides desktop nav on small screens */
+  }
+
+  #hamburger {
+    display: flex;              /* Stacks the three hamburger lines vertically */
+    flex-direction: column;     /* Ensures vertical stacking */
+    justify-content: space-around; /* Evenly spaces lines top to bottom */
+    align-items: center;        /* Centers lines horizontally */
+    width: 44px;                /* Sets width of clickable hamburger area */
+    height: 36px;               /* Sets height of clickable hamburger area */
+    cursor: pointer;            /* Changes cursor to pointer */
+    z-index: 1001;              /* Positions hamburger above menu */
+    position: fixed;            /* Fixes hamburger to same spot when scrolling */
+    top: 12px;                  /* Places at top */
+    left: 12px;                 /* Places at left */
+  }
+
+  /* Mobile menu centered on screen */
+  #mobileMenu {
+    display: none;              /* Hidden until hamburger is clicked */
+    position: fixed;            /* Fixes mobile menu position to same spot */
+    top: 12px;                  /* Same top position as hamburger */
+    left: 0;                    /* Start from left edge */
+    right: 0;                   /* End at right edge */
+    width: 100%;                /* Full width */
+    background: transparent;    /* Remove background */
+    border: none;               /* Remove borders */
+    padding: 0;                 /* Remove padding */
+    margin-bottom: 2.5rem;      /* Adds space below nav menu */
+    z-index: 1000;              /* Below hamburger but above content */
+    pointer-events: none;       /* Allow clicks to pass through empty space */
+  }
+
+  #mobileMenu ul {
+    list-style: none;           /* Removes bullets from mobile list */
+    padding: 12px 25px;         /* Match desktop padding */
+    margin: 0 auto;             /* Center the pill horizontally */
+    display: flex;              /* Lays out mobile links horizontally */
+    justify-content: center;    /* Center the buttons horizontally */
+    align-items: center;        /* Align all buttons vertically to center */
+    gap: 1rem;                /* Smaller gap for mobile */
+    background: var(--nav-menu); /* Match desktop background */
+    border-radius: 50px;        /* Match desktop pill shape */
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1); /* Match desktop shadow */
+    flex-wrap: nowrap;          /* Prevent buttons from wrapping to new line */
+    overflow-x: auto;           /* Allow horizontal scrolling if needed */
+    width: fit-content;         /* Only as wide as needed */
+    pointer-events: auto;       /* Allow clicks on the pill itself */
+  }
+
+  #mobileMenu.show {
+    display: block !important;  /* Shows mobile menu when show class is added */
+  }
+
+  #mobileMenu a {
+    color: white;               /* Match desktop */
+    text-decoration: none;      /* Removes underlines */
+    font-weight: 700;           /* Match desktop bold */
+    padding: 8px 12px;          /* Slightly smaller padding for mobile */
+    border-radius: 50px;        /* Match desktop rounded */
+    text-transform: uppercase;  /* Match desktop uppercase */
+    transition: background-color 0.3s, transform 0.2s; /* Match desktop transition */
+    white-space: normal;        /* Allow text wrapping inside button */
+    font-size: 0.75rem;         /* Smaller text to fit better */
+    line-height: 1.2;           /* Tighter line height for wrapped text */
+    text-align: center;         /* Center multi-line text */
+    max-width: 120px;           /* Limit button width */
+    display: flex;              /* Use flexbox for vertical centering */
+    align-items: center;        /* Center text vertically */
+    justify-content: center;    /* Center text horizontally */
+    min-height: 50px;           /* Set minimum height for all buttons */
+  }
+
+  #mobileMenu a:hover {
+    background: #543bac;;        /* Match desktop hover */
+    transform: scale(1.05);     /* Match desktop hover scale */
+  }
+
+  #home {
+    margin-top: 5.65rem;           /* Increase space between nav and home section */
+  }
+}
+
+/* Tablet and Mobile - 768px and below */
+@media (max-width: 768px) {
+  .edu-exp { 
+    flex-direction: column;     /* Stacks columns vertically on mobile */
+  }
+  
+  .skill-box {
+    padding: 20px 15px;         /* Reduce padding */
+  }
+  
+  .skill-box .skill-icon {
+    max-width: 120px;           /* Smaller icons on mobile */
+  }
+  
+  .skill-box span {
+    font-size: clamp(0.9rem, 3vw, 1.5rem); /* Smaller range for mobile (min, preferred, max */
+  }
+}
+
+/* Home Card Mobile - 820px and below */
+@media (max-width: 820px) {
+  .home-card { 
+    flex-direction: column;     /* Stacks content and photo vertically */
+  }
+  
+  .home-photo { 
+    height: 320px;              /* Sets photo height */
+    border-radius: 12px;        /* Rounds all corners */
+  }
+  
+  .home-info { 
+    padding: 1.25rem 1rem;      /* Reduces padding */
+  }
+  
+  .home-info h1 { 
+    font-size: 2rem;            /* Reduces heading size */
+  }
+}
