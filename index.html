@@ -14,18 +14,17 @@
   <!-- Hexagon Grid Container -->
   <div id="hex-grid-container"></div>
 
+
   <header>
     <!-- Hidden checkbox for menu state -->
     <input type="checkbox" id="menu-toggle">
     
-    <!-- Hamburger (NOT wrapped in label) -->
-    <div id="hamburger">
-      <label for="menu-toggle" aria-label="Menu" role="button" tabindex="0">
-        <hr class="hamline" />
-        <hr class="hamline" /> 
-        <hr class="hamline" />
-      </label>
-    </div>
+    <!-- Hamburger label (label wraps the bars) -->
+    <label for="menu-toggle" id="hamburger" aria-label="Toggle menu">
+      <div class="hamline"></div>
+      <div class="hamline"></div>
+      <div class="hamline"></div>
+    </label>
 
     <!-- Desktop nav -->
     <nav id="desktopMenu">

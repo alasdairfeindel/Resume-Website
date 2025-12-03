@@ -106,21 +106,6 @@ nav {
 }
 
 /* =======================
-   HAMBURGER (MOBILE)
-   Container and line styles for the hamburger icon
-======================= */
-#hamburger {
-  display: none;                /* Hidden by default (desktop) */
-}
-
-#hamburger .hamline {
-  width: 24px;                  /* Sets length of each horizontal bar */
-  height: 2px;                  /* Sets thickness of each bar */
-  background: var(--secondary); /* Sets bar color to white */
-  border-radius: 2px;           /* Adds small radius to bar ends */
-}
-
-/* =======================
    DESKTOP NAV (pill style)
 ======================= */
 #desktopMenu > ul {
@@ -157,29 +142,6 @@ nav {
 
 #desktopMenu li a[href="#educationexperience"] { 
   white-space: nowrap;          /* Prevents this link from wrapping */
-}
-
-/* =======================
-   MOBILE MENU (hidden on desktop)
-======================= */
-#mobileMenu { 
-  display: none;                /* Hide mobile menu by default */
-}
-
-#mobileMenu.show {
-  display: block !important;    /* Shows mobile menu when show class is added, !important forces it */
-}
-/* =======================
-   HAMBURGER MENU TOGGLE
-======================= */
-/* Hide the checkbox */
-#menu-toggle {
-  display: none;
-}
-
-/* When checkbox is checked, show the mobile menu */
-#menu-toggle:checked ~ #mobileMenu {
-  display: block !important;
 }
 
 /* =======================
@@ -599,6 +561,21 @@ a img {
 }
 
 /* =======================
+   HAMBURGER & MOBILE MENU (hidden on desktop)
+======================= */
+#menu-toggle {
+  display: none;                /* Hides menu toggle in desktop view */
+}
+
+#hamburger {
+  display: none;                /* Hides hamburger in desktop view */
+}
+
+#mobileMenu { 
+  display: none;                /* Hides mobile menu in desktop view */
+}
+
+/* =======================
    MEDIA QUERIES
 ======================= */
 
@@ -609,82 +586,98 @@ a img {
   }
 
   #hamburger {
-    display: flex;              /* Stacks the three hamburger lines vertically */
-    flex-direction: column;     /* Ensures vertical stacking */
-    justify-content: space-around; /* Evenly spaces lines top to bottom */
-    align-items: center;        /* Centers lines horizontally */
+    display: flex;              /* Lays out buttons in a row */
+    flex-direction: column;     /* Ensures vertical stacking in box */
+    justify-content: space-around; /* Evenly spaces hamburger lines */
+    align-items: center;        /* Centers items horizontally in box */
     width: 44px;                /* Sets width of clickable hamburger area */
     height: 36px;               /* Sets height of clickable hamburger area */
     cursor: pointer;            /* Changes cursor to pointer */
     z-index: 1001;              /* Positions hamburger above menu */
     position: fixed;            /* Fixes hamburger to same spot when scrolling */
-    top: 12px;                  /* Places at top */
-    left: 12px;                 /* Places at left */
+    top: 12px;                  /* Places slightly below the very top */
+    left: 12px;                 /* Places x value away from left edge */
   }
 
-  /* Mobile menu centered on screen */
+  /* Hamburger lines */
+  #hamburger .hamline {
+    width: 24px;                /* Sets length of each horizontal bar */
+    height: 2px;                /* Sets thickness of each bar */
+    background: var(--secondary); /* Sets bar color to white */
+    border-radius: 2px;         /* Adds small radius to bar ends */
+    transition: transform 0.3s ease, opacity 0.3s ease; /* Sets transition properties */
+  }
+
+  /* Mobile menu sliding panel */
   #mobileMenu {
-    display: none;              /* Hidden until hamburger is clicked */
-    position: fixed;            /* Fixes mobile menu position to same spot */
-    top: 12px;                  /* Same top position as hamburger */
-    left: 0;                    /* Start from left edge */
-    right: 0;                   /* End at right edge */
-    width: 100%;                /* Full width */
-    background: transparent;    /* Remove background */
-    border: none;               /* Remove borders */
-    padding: 0;                 /* Remove padding */
-    margin-bottom: 2.5rem;      /* Adds space below nav menu */
-    z-index: 1000;              /* Below hamburger but above content */
-    pointer-events: none;       /* Allow clicks to pass through empty space */
+    display: block;             /* Sets block-level display; each img takes up a column */
+    position: fixed;            /* Fixes hamburger to same spot when scrolling */
+    top: 0;                     /* Places at top */
+    left: -100%;                /* Hides off screen until activated */
+    width: 280px;               /* Sets width value */
+    height: 100vh;              /* Sets full viewport height */
+    background: var(--nav-menu); /* Sets pill background color */
+    opacity: 0.95;              /* Sets semi-transparent */
+    padding: 80px 20px 20px 20px; /* Adds padding to panel */
+    z-index: 1000;              /* Positions nav above everything */
+    transition: left 0.3s ease; /* Sets transition properties */
+    overflow-y: auto;           /* Adds scroll option if enough menu items exist */
+    box-shadow: 2px 0 15px rgba(0,0,0,0.3); /* Adds shadow effects */
+  }
+
+  /* When hamburger is pressed, slide menu in from left */
+  #menu-toggle:checked ~ #mobileMenu {
+    left: 0;                    /* Places at left */
   }
 
   #mobileMenu ul {
-    list-style: none;           /* Removes bullets from mobile list */
-    padding: 12px 25px;         /* Match desktop padding */
-    margin: 0 auto;             /* Center the pill horizontally */
-    display: flex;              /* Lays out mobile links horizontally */
-    justify-content: center;    /* Center the buttons horizontally */
-    align-items: center;        /* Align all buttons vertically to center */
-    gap: 1rem;                /* Smaller gap for mobile */
-    background: var(--nav-menu); /* Match desktop background */
-    border-radius: 50px;        /* Match desktop pill shape */
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1); /* Match desktop shadow */
-    flex-wrap: nowrap;          /* Prevent buttons from wrapping to new line */
-    overflow-x: auto;           /* Allow horizontal scrolling if needed */
-    width: fit-content;         /* Only as wide as needed */
-    pointer-events: auto;       /* Allow clicks on the pill itself */
-  }
-
-  #mobileMenu.show {
-    display: block !important;  /* Shows mobile menu when show class is added */
+    list-style: none;           /* Removes default bullets */
+    padding: 0;                 /* Removes padding */
+    margin: 0;                  /* Resets default margin */
+    display: flex;              /* Lays out buttons in a row */
+    flex-direction: column;     /* Ensures vertical stacking in box */
+    gap: 0;                     /* Removes gap spacing */
   }
 
   #mobileMenu a {
-    color: white;               /* Match desktop */
-    text-decoration: none;      /* Removes underlines */
-    font-weight: 700;           /* Match desktop bold */
-    padding: 8px 12px;          /* Slightly smaller padding for mobile */
-    border-radius: 50px;        /* Match desktop rounded */
-    text-transform: uppercase;  /* Match desktop uppercase */
-    transition: background-color 0.3s, transform 0.2s; /* Match desktop transition */
-    white-space: normal;        /* Allow text wrapping inside button */
-    font-size: 0.75rem;         /* Smaller text to fit better */
-    line-height: 1.2;           /* Tighter line height for wrapped text */
-    text-align: center;         /* Center multi-line text */
-    max-width: 120px;           /* Limit button width */
-    display: flex;              /* Use flexbox for vertical centering */
-    align-items: center;        /* Center text vertically */
-    justify-content: center;    /* Center text horizontally */
-    min-height: 50px;           /* Set minimum height for all buttons */
+    color: white;               /* Sets text to white */
+    text-decoration: none;      /* Removes underline */
+    font-weight: 700;           /* Sets bold nav labels */
+    padding: 18px 20px;         /* Padding around text */
+    text-transform: uppercase;  /* Transforms text to uppercase */
+    display: block;             /* Sets block-level display; each img takes up a column */
+    border-bottom: 1px solid rgba(255,255,255,0.1); /* Creates line between menu items */
+    transition: background-color 0.3s, padding-left 0.3s; /* Adds smooth transitions */
+    font-size: 1rem;            /* Font size */
   }
 
   #mobileMenu a:hover {
-    background: #543bac;;        /* Match desktop hover */
-    transform: scale(1.05);     /* Match desktop hover scale */
+    background: var(--hover);   /* Changes background color on hover */
+    padding-left: 30px;         /* Pushes text to the right by adding padding */
+  }
+
+  /* Dimmed area to right of menu when open */
+  #mobileMenu::before {
+    content: '';                /* Creates an empty element that exists only so it can be customized by the other properties in that CSS rule  */
+    position: fixed;            /* Fixes hamburger to same spot when scrolling */
+    top: 0;                     /* Places at top */
+    left: 280px;                /* Places x value away from left edge */
+    width: calc(100vw - 280px); /* Fill viewport width minus x value */
+    height: 100vh;              /* Sets full viewport height */
+    background: rgba(0,0,0,0.5); /* Colour and opacity for dimmed area*/
+    opacity: 0;                 /* Hidden by default */
+    pointer-events: none;       /* Don't block clicks when hidden */
+    transition: opacity 0.3s ease; /* Sets transition properties */
+  }
+
+  /* Show overlay when menu is open */
+  #menu-toggle:checked ~ #mobileMenu::before {
+    opacity: 1;                 /* Show overlay when menu is open */
+    transition: opacity 0.3s ease; /* Sets transition properties */
   }
 
   #home {
-    margin-top: 5.65rem;           /* Increase space between nav and home section */
+    margin-top: 0.50rem;        /* Space at top of home */
   }
 }
 
