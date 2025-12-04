@@ -560,6 +560,11 @@ a img {
   color: #ccc;                  /* Changes color to light gray on hover */
 }
 
+footer p {
+  margin: 15px 0;      /* Space between <p> tags */
+  line-height: 1.2;    /* Space within <p> when text wraps */
+}
+
 /* =======================
    HAMBURGER & MOBILE MENU (hidden on desktop)
 ======================= */
