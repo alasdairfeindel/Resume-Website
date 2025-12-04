@@ -596,7 +596,7 @@ a img {
     z-index: 1001;              /* Positions hamburger above menu */
     position: fixed;            /* Fixes hamburger to same spot when scrolling */
     top: 12px;                  /* Places slightly below the very top */
-    left: 12px;                 /* Places x value away from left edge */
+    left: 2px;                 /* Places x value away from left edge */
   }
 
   /* Hamburger lines */
@@ -677,7 +677,11 @@ a img {
   }
 
   #home {
-    margin-top: 0.50rem;        /* Space at top of home */
+    margin-top: 1.90rem;        /* Space at top of home */
+  }
+
+  footer p {
+    text-align: center;       /* Center text */
   }
 }
 
@@ -692,11 +696,11 @@ a img {
   }
   
   .skill-box .skill-icon {
-    max-width: 120px;           /* Smaller icons on mobile */
+    max-width: 110px;           /* Smaller icons on mobile */
   }
   
   .skill-box span {
-    font-size: clamp(0.9rem, 3vw, 1.5rem); /* Smaller range for mobile (min, preferred, max */
+    font-size: 1.35rem; /* Font size for mobile */
   }
 }
 
