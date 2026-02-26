@@ -580,6 +580,10 @@ footer p {
   display: none;                /* Hides mobile menu in desktop view */
 }
 
+#menu-overlay {
+  display: none;                /* Hides overlay in desktop view */
+}
+
 /* =======================
    MEDIA QUERIES
 ======================= */
@@ -662,23 +666,20 @@ footer p {
   }
 
   /* Dimmed area to right of menu when open */
-  #mobileMenu::before {
-    content: '';                /* Creates an empty element that exists only so it can be customized by the other properties in that CSS rule  */
-    position: fixed;            /* Fixes hamburger to same spot when scrolling */
-    top: 0;                     /* Places at top */
-    left: 280px;                /* Places x value away from left edge */
-    width: calc(100vw - 280px); /* Fill viewport width minus x value */
-    height: 100vh;              /* Sets full viewport height */
-    background: rgba(0,0,0,0.5); /* Colour and opacity for dimmed area*/
-    opacity: 0;                 /* Hidden by default */
-    pointer-events: none;       /* Don't block clicks when hidden */
-    transition: opacity 0.3s ease; /* Sets transition properties */
+  #menu-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 280px;
+    width: calc(100vw - 280px);
+    height: 100vh;
+    z-index: 999;
+    cursor: pointer;
+    background: rgba(0,0,0,0.5);
   }
 
-  /* Show overlay when menu is open */
-  #menu-toggle:checked ~ #mobileMenu::before {
-    opacity: 1;                 /* Show overlay when menu is open */
-    transition: opacity 0.3s ease; /* Sets transition properties */
+  #menu-toggle:checked ~ #menu-overlay {
+    display: block;
   }
 
   #home {
