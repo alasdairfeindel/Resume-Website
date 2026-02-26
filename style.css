@@ -438,15 +438,22 @@ a img {
 /* =======================
    EXPANDABLE CONTENT
 ======================= */
-.section-expansion h3 {
+.expansion-toggle {
+  display: none;                /* Hides checkbox */
+}
+
+.section-expansion label {
   cursor: pointer;              /* Changes cursor to pointer */
-  position: relative;           /* Creates positioning context and enables z-index; maintains space when repositioned */
+  display: block;               /* Sets block-level display; each label takes full width */
+}
+
+.section-expansion label h3 {
   display: flex;                /* Sets to flex container */
   justify-content: space-between; /* Sets the horizontal spacing of items */
   align-items: center;          /* Centers vertically */
 }
 
-.section-expansion h3::after {
+.section-expansion label h3::after {
   content: '▼';                 /* The arrow */
   font-size: 0.7em;             /* Arrow size is 70% of font */
   transition: transform 0.3s ease; /* Transition time and animation */
@@ -454,22 +461,22 @@ a img {
   flex-shrink: 0;               /* Arrow stays the same size even if h3 text wraps */
 }
 
-.section-expansion:hover h3::after {
-  transform: rotate(180deg);    /* Flips arrow on hover */
+.expansion-toggle:checked ~ label h3::after {
+  transform: rotate(180deg);    /* Flips arrow when open */
 }
 
-.text-expansion {            /* When hover is not active on section */
+.text-expansion {
   max-height: 0;                /* Hides content by collapsing it */
   overflow: hidden;             /* Hides any overflow */
   opacity: 0;                   /* Hides content by making it transparent */
-  transition: max-height 0.5s ease, opacity 0.4s ease, margin-top 0.5s ease; /* Animates height, opacity, and margin when expanding/collapsing on hover */
+  transition: max-height 0.5s ease, opacity 0.4s ease, margin-top 0.5s ease; /* Animates height, opacity, and margin when expanding/collapsing on click */
   margin-top: 0;                /* No spacing when collapsed */
 }
 
-.section-expansion:hover .text-expansion {
+.expansion-toggle:checked ~ .text-expansion {
   max-height: 2000px;           /* Sets max height large enough to show all content */
   opacity: 1;                   /* Makes everything appear at full opacity */
-  margin-top: 15px;             /* Sets margin to have spacing once hovering */
+  margin-top: 15px;             /* Sets margin to have spacing once clicked */
 }
 
 /* =======================
@@ -667,19 +674,19 @@ footer p {
 
   /* Dimmed area to right of menu when open */
   #menu-overlay {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 280px;
-    width: calc(100vw - 280px);
-    height: 100vh;
-    z-index: 999;
-    cursor: pointer;
-    background: rgba(0,0,0,0.5);
+    display: none;              /* Hidden by default */
+    position: fixed;            /* Fixes overlay to same spot when scrolling */
+    top: 0;                     /* Places at top */
+    left: 280px;                /* Places x value away from left edge */
+    width: calc(100vw - 280px); /* Fill viewport width minus x value */
+    height: 100vh;              /* Sets full viewport height */
+    z-index: 999;               /* Positions below menu panel but above content */
+    cursor: pointer;            /* Changes cursor to pointer */
+    background: rgba(0,0,0,0.5); /* Colour and opacity for dimmed area */
   }
 
   #menu-toggle:checked ~ #menu-overlay {
-    display: block;
+    display: block;             /* Shows overlay when menu is open */
   }
 
   #home {
